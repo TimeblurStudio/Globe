@@ -1,0 +1,106 @@
+body {
+	margin: 0px;
+	background-color: #000000;
+	overflow: hidden;
+}
+
+#stats { 
+	position: absolute; 
+	top:0; 
+	left: 0; 
+	display: none;
+}
+
+#selectedCountrySummary { 
+	color: #ffffff; 
+	text-align: center; 
+	color: 0xffffff; 
+	display: none; 
+}
+
+#selectedCountryName {  
+	font-size: 50px; 
+	display: inline-block; 
+	vertical-align: center;
+}
+
+
+#selectedCountryStats { 
+	font-size: 16px; 
+	display: inline-block; 
+	vertical-align: center; 
+	padding-left: 20px; 
+	text-align: left;
+}
+
+#topContentMiddleDiv { 
+	position: absolute; 
+	top: 50%; 
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%); 
+	transform: translateY(-50%);
+}
+
+.immigrantButton {
+	background-color:#000000;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:10px 20px;
+	text-decoration:none;
+	border-bottom: 4px solid #dd380c;
+}
+.immigrantButton:hover {
+	/*background-color:#dd380c;*/
+	border-bottom: 4px solid #dd380c;
+}
+.immigrantButton:active {
+	position:relative;
+	top:1px;
+}
+
+.emigrantButton {
+	background-color:#000000;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:10px 20px;
+	text-decoration:none;
+	border-bottom: 4px solid #154492;
+}
+.emigrantButton:hover {
+	/*background-color:#154492;*/
+	border-bottom: 4px solid #154492;
+}
+.emigrantButton:active {
+	position:relative;
+	top:1px;
+}
+a img {
+	user-drag: none; 
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* unvisited link */
+#dataSource a:link {
+    color: #008096;
+    text-decoration: none;
+}
+
+#dataSource a:hover {
+    color: #0080ff;
+}

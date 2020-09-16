@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Globe - Data Viz</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<style>
+			
+		</style>
+	</head>
+	<body onload="start()">
+		<script src="js/three.min.js"></script>
+		<script src="js/stats.min.js"></script>
+		<script src="js/Detector.js"></script>
+
+		<script id="globeVertexShader" type="x-shader/x-vertex">
+			varying vec3 vNormal;
+			varying vec2 vUv;
+			void main() {
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0);
+				vNormal = normalize( normalMatrix * normal );
+				vUv = uv;
+			}
+		</script>
+
+		<script id="globeFragmentShader" type="x-shader/x-fragment">
+			uniform sampler2D mapIndex;
+			uniform sampler2D lookup;
+			uniform sampler2D outline;
+			uniform float outlineLevel;
+			varying vec3 vNormal;
+			varying vec2 vUv;
+			void main() {
+				vec4 mapColor = texture2D( mapIndex, vUv );
+				float indexedColor = mapColor.x;
+				vec2 lookupUV = vec2( indexedColor, 0. );
+				vec4 lookupColor = texture2D( lookup, lookupUV );
+				float mask = lookupColor.x + (1.-outlineLevel) * indexedColor;
+				mask = clamp(mask,0.,1.);
+				float outlineColor = texture2D( outline, vUv ).x * outlineLevel;
+				float diffuse = mask + outlineColor;
+				gl_FragColor = vec4( vec3(diffuse), 1.  );
+			}
+		</script>
+
+		<script src="js/jquery-1.7.1.min.js"></script>
+		<script src="js/mousekeyboard.js"></script>
+		<script src="js/visualize_lines.js"></script>
+		<script src="js/visualize.js"></script>
+		<script src="js/geopins.js"></script>
+		<script src="js/dataloading.js"></script>
+		<script src="js/main.js"></script>
+		
+		<div id="pageTitle" class="noselect"  style="position: absolute; color: #ffffff; font-size:40px; padding: 30px;">
+			World Migration Globe
+		</div>
+
+		<div style="position: absolute; right: 0; width: 300px; height: 100%; color: #ffffff;" >
+			<div id="topContentMiddleDiv" style="height: 300px;" class="noselect">
+				<div id="EIbuttons">
+					<a href="javascript:emigrantButtonClicked();" class="emigrantButton">Emigrant</a>
+					&nbsp
+					<a href="javascript:immigrantButtonClicked()" class="immigrantButton">Immigrant</a> 
+				</div>
+				<br>
+				<div id="topInfo" style="padding-left: 5px; display: none;">
+					<div id="topExportdiv">
+					<div style="border-left: 4px solid #154492;">&nbspMigrant destinations</div>
+					<table id="topExport" style="padding-left: 10px; padding-top: 10px; width:100%; font-size:12px;"></table>
+					</div>
+					<br>
+					<div id="topImportdiv">
+					<div style="border-left: 4px solid #dd380c;">&nbsp Migrant native countries</div>
+					<table id="topImport" style="padding-left: 10px; padding-top: 10px; width:100%; font-size:12px;"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div style="position:fixed; bottom:10px; width:100%;">
+			<div id="selectedCountrySummary" class="noselect">
+			    <div id="selectedCountryName"></div>
+			    <div id="selectedCountryStats"></div>
+			</div>
+		</div>
+
+		<div id="dataSource" class="noselect dataSourceClass"  style="position: absolute; right: 0; color: #8a8a8a; font-size:12px; bottom: 0; padding: 10px;">
+			<a target="_blank" href="http://go.worldbank.org/JITC7NYTT0">Bilateral Migration Data</a> from <a target="_blank" href="http://www.worldbank.org/"><img src="images/World_Bank_Group_logo.png" width="100px" style="vertical-align: middle;"/></a>
+		</div>
+	</body>
+</html>
